@@ -1,0 +1,71 @@
+---------------------------------------------
+OSHONSOFT Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ;Considerando que el sistema solo tiene memoria EEPROM
+0002   0000             ;calcule la raíz cuadrada de un número entero, sin signo, de 8 bits.
+0003   0000             ;El número, del que se obtendrá su raíz cuadrada debe ser dado en BCD (decimal), en el registro B
+0004   0000             ;de tal manera que podremos obtener la raíz cuadrada de números en el rango de 0 a 99
+0005   0000             ;EL resultado (solo la parte entera), debe ser depositado (en decimal) en el registro C
+0006   0000              .org 0000h ;Line modified by ASM preprocessor (.ORG correction): .org 0000h
+0007   0000             ;cargando las ondiciones inicailes
+0008   0000 06 63       	ld b,99
+0009   0002 78          	ld a,b
+0010   0003 26 09       	ld h,9		;inicio de contador
+0011   0005             
+0012   0005             ;busqueda de raizes
+0013   0005 FE 51       	cp 81		;raizes enteras
+0014   0007 F2 60 00    	jp p, resultado ;mayor o menor que
+0015   000A CA 60 00    	jp z, resultado ;
+0016   000D 25          	dec h    ;contador
+0017   000E FE 40       	cp 64
+0018   0010 F2 60 00    	jp p, resultado
+0019   0013 CA 60 00    	jp z, resultado
+0020   0016 25          	dec h
+0021   0017 FE 31       	cp 49
+0022   0019 F2 60 00    	jp p, resultado
+0023   001C CA 60 00    	jp z, resultado
+0024   001F 25          	dec h
+0025   0020 FE 24       	cp 36
+0026   0022 F2 60 00    	jp p, resultado
+0027   0025 CA 60 00    	jp z, resultado
+0028   0028 25          	dec h
+0029   0029 FE 19       	cp 25
+0030   002B F2 60 00    	jp p, resultado
+0031   002E CA 60 00    	jp z, resultado
+0032   0031 25          	dec h
+0033   0032 FE 10       	cp 16
+0034   0034 F2 60 00    	jp p, resultado
+0035   0037 CA 60 00    	jp z, resultado
+0036   003A 25          	dec h
+0037   003B FE 09       	cp 9
+0038   003D F2 60 00    	jp p, resultado
+0039   0040 CA 60 00    	jp z, resultado
+0040   0043 25          	dec h
+0041   0044 FE 04       	cp 4
+0042   0046 F2 60 00    	jp p, resultado
+0043   0049 CA 60 00    	jp z, resultado
+0044   004C FE 00       	cp 0
+0045   004E 28 0B       	jr z,caso1
+0046   0050 FE 01       	cp 1
+0047   0052 28 09       	jr z,caso
+0048   0054 FE 03       	cp 3
+0049   0056 28 05       	jr z,caso
+0050   0058 F2 60 00    	jp p, resultado
+0051   005B             	end
+0052   005B             ;fin de caso 0
+0053   005B             caso1:
+0054   005B 4F          	ld c,a
+0055   005C 76          	halt
+0056   005D             ;fin de casos 1 a 3
+0057   005D             caso:
+0058   005D 0E 01       	ld c,1
+0059   005F 76          	halt
+0060   0060             	end
+0061   0060             ;fin de cason en general
+0062   0060             resultado:
+0063   0060 4C          	ld c,h
+0064   0061 76          	halt
+0065   0062             	end
+0066   0062             ;Si dios existira no se me hubiera permitido escribir esto
+Number of errors = 0
